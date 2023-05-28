@@ -1,24 +1,42 @@
 import logo from './logo.svg';
 import './App.css';
+import List from './List';
+import Edit from './Edit';
+import Rbs from './Rbs';
+import { useState } from 'react';
 
 function App() {
+  const [Name,setName]=useState('');
+  const [showList,setShowList]=useState(true);
+  const [showEdit,setShowEdit]=useState(false);
+  const [showRbs,setShowRbs]=useState(false);
+  const [newName,setnewName]=useState('');
+  const reset=()=>{
+    setShowEdit(false);
+    setShowList(false);
+    setShowRbs(false);
+  }
+  const showPage=(page)=>{
+      reset();
+      if(page=="edit"){
+      setShowEdit(true);
+      }
+
+      if(page=="rbs"){
+        setShowRbs(true);
+      }
+
+      if(page=="list"){
+        setShowList(true);
+      }
+  }
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {showList && <List setnewName={setnewName} Name={Name} showPage={showPage}  changeName={setName} ></List> }
+      {showEdit && <Edit showPage={showPage} setnewName={setnewName} ConstName={Name} Name={newName}></Edit>}
+      {showRbs &&  <Rbs Name={newName} showPage={showPage}></Rbs>}
+    </>
   );
 }
 
